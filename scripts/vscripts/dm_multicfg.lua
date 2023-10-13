@@ -1,4 +1,3 @@
-print("Starting Franug test!")
 require("util.timers")
 
 local stageId = 0
