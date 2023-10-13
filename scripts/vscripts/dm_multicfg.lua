@@ -1,3 +1,4 @@
+print("Starting DM MULTI CFG!")
 require("util.timers")
 
 local stageId = 0
