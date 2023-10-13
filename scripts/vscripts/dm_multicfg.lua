@@ -216,12 +216,11 @@ function getStage(stage)
 end
 
 function setupStage()
-    for i = 1, 64 do
-        local hController = EntIndexToHScript(i)
-
-        if hController ~= nil and hController:GetPawn() ~= nil then
+    local tPlayerTable = Entities:FindAllByClassname("player")
+    for _, player in ipairs(tPlayerTable) do
+        if player:IsAlive() then
             --I have absolutely no idea why, but this has to be delayed now
-            RemoveWeapons(hController:GetPawn())
+            RemoveWeapons(player)
             --GiveWeapons(hController:GetPawn())
             --local player = hController:GetPawn()
             --DoEntFireByInstanceHandle(player, "SetHealth", "0", 0.01, nil, nil)
