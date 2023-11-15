@@ -1,9 +1,8 @@
 print("Starting DM MULTI CFG!")
 require("util.timers")
+require("dm_multicfg_config")
 
 local stageId = 0
-
---local first_stage = false
 
 local DMconnectedPlayers = {}
 
@@ -158,6 +157,7 @@ function DMOnRoundStart(event)
 
     Timers:RemoveTimer("DM_Timer")
 
+    setupRestricts()
     setupStage()
     DM_ChangeStage()
 end
@@ -172,6 +172,7 @@ function DM_ChangeStage()
                 if DM_Countdown <= 0 then
                     Timers:RemoveTimer("DM_Timer")
                     stageId = stageId + 1
+                    setupRestricts()
                     setupStage()
                     DM_ChangeStage()
                 else
@@ -263,6 +264,7 @@ function setupStage()
         SendToServerConsole("sm_give @all nova")
     else
         stageId = 0
+        setupRestricts()
         Convars:SetInt("mp_weapons_allow_pistols", -1)
         Convars:SetInt("mp_weapons_allow_smgs", 0)
         Convars:SetInt("mp_weapons_allow_heavy", 0)
@@ -277,6 +279,25 @@ function setupStage()
     --DoEntFireByInstanceHandle(nil, "runscriptcode", "ScriptCoopMissionRespawnDeadPlayers()", 0.1, nil, nil)
     --DoEntFire()
     --ScriptCoopMissionRespawnDeadPlayers()
+end
+
+function setupRestricts()
+    if (stageId == 0 and enablePistols == false) then
+        stageId = stageId + 1
+        setupRestricts()
+    elseif (stageId == 1 and enableSMGs == false) then
+        stageId = stageId + 1
+        setupRestricts()
+    elseif (stageId == 2 and enableRifles == false) then
+        stageId = stageId + 1
+        setupRestricts()
+    elseif (stageId == 3 and enableShotGuns == false) then
+        stageId = stageId + 1
+        setupRestricts()
+    elseif (stageId > 3 and enablePistols == false) then
+        stageId = 0
+        setupRestricts()
+    end
 end
 
 function RemoveWeapons(hPlayer)
