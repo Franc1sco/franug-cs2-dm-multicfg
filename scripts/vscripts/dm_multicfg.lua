@@ -364,6 +364,7 @@ end
 
 function GivePlayerItem(hPlayer, Weapon)
     SendToServerConsole("sm_give "..table.dmGetUserIdFromPawn(DMconnectedPlayers, hPlayer).. " "..Weapon)
+	SendToServerConsole("css_give #"..table.dmGetUserIdFromPawn(DMconnectedPlayers, hPlayer).. " "..Weapon)
 end
 
 function GivePlayerItem3(hPlayer, Weapon)
